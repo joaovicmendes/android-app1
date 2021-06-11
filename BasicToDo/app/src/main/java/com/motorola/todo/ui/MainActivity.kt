@@ -1,14 +1,15 @@
-package com.motorola.todo
+package com.motorola.todo.ui
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.activity_main.*
+import com.motorola.todo.R
 import com.motorola.todo.adapter.ToDoAdapter
 import com.motorola.todo.model.ToDoItem
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var todoAdapter: ToDoAdapter

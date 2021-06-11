@@ -1,11 +1,12 @@
-package com.motorola.todo
+package com.motorola.todo.ui
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import kotlinx.android.synthetic.main.activity_new_to_do.*
+import androidx.appcompat.app.AppCompatActivity
+import com.motorola.todo.R
 import com.motorola.todo.model.ToDoItem
+import kotlinx.android.synthetic.main.activity_new_to_do.*
 
 class NewToDoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
