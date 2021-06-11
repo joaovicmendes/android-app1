@@ -1,3 +1,12 @@
 <resources>
+    <!-- Main Activity -->
     <string name="app_name">Basic ToDo</string>
+    <string name="fab_add_todo_description">Add ToDo</string>
+
+    <!-- New To Do Activity -->
+    <string name="tv_todo_title">Title</string>
+    <string name="ed_todo_title_hint">Title</string>
+    <string name="tv_todo_description">Description (optional)</string>
+    <string name="ed_todo_description_hint">Describe the details of your To Do</string>
+    <string name="fab_save_todo_description">Save ToDo</string>
 </resources>
