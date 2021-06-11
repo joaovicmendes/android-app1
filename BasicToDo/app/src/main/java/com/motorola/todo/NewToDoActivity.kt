@@ -14,14 +14,19 @@ class NewToDoActivity : AppCompatActivity() {
 
         val fab: View = findViewById(R.id.fab_save_todo)
         fab.setOnClickListener {
-            val title = tv_add_todo_title.text.toString()
-            val description = tv_add_todo_description.text.toString()
+            val title = ed_add_todo_title.text.toString()
+            val description = ed_add_todo_description.text.toString()
+
             if (title.isEmpty()) {
-                TODO("Aviso de erro")
+                setResult(RESULT_CANCELED, intent)
+                finish()
             }
 
             val todo = ToDoItem(title, description)
-            TODO("Salvar no item")
+            val intent = Intent(this, MainActivity::class.java)
+            intent.putExtra("NEW_TODO", todo)
+            setResult(RESULT_OK, intent)
+            finish()
         }
     }
 }
