@@ -9,5 +9,6 @@
     <string name="tv_todo_description">Description (optional)</string>
     <string name="ed_todo_description_hint">Describe the details of your To Do</string>
     <string name="fab_save_todo_description">Save ToDo</string>
-    <string name="todo_empty_title">ToDo title is required!</string>
+    <string name="todo_empty_title">Title is required!</string>
+    <string name="todo_added_success">ToDo successfullt added!</string>
 </resources>

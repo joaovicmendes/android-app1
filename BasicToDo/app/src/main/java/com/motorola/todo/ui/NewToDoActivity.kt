@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.motorola.todo.R
 import com.motorola.todo.model.ToDoItem
 import kotlinx.android.synthetic.main.activity_new_to_do.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class NewToDoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,7 +25,10 @@ class NewToDoActivity : AppCompatActivity() {
                 finish()
             }
 
-            val todo = ToDoItem(title, description)
+            val createdDate = SimpleDateFormat("dd/MM/yyyy").format(
+                Calendar.getInstance().time
+            )
+            val todo = ToDoItem(title, description, createdDate)
             val intent = Intent(this, MainActivity::class.java)
             intent.putExtra("NEW_TODO", todo)
             setResult(RESULT_OK, intent)

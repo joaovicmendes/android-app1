@@ -1,12 +1,16 @@
 package com.motorola.todo.model
 
 import android.os.Parcelable
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
-import java.util.*
 
+@Entity(tableName = "ToDoItems")
 @Parcelize
 data class ToDoItem (
-    val title: String,
-    val description: String = "",
-    val createdDate: Calendar = Calendar.getInstance(),
-    var isDone: Boolean = false) : Parcelable
+    @ColumnInfo(name = "title") val title: String,
+    @ColumnInfo(name = "description") val description: String = "",
+    @ColumnInfo(name = "createdDate") val createdDate: String = "None",
+    @ColumnInfo(name = "first_name") var isDone: Boolean = false,
+    @PrimaryKey(autoGenerate = true) val uid: Int = 0) : Parcelable

@@ -10,11 +10,9 @@ import com.motorola.todo.R
 import com.motorola.todo.model.ToDoItem
 import kotlinx.android.synthetic.main.todo_item.view.*
 import java.text.SimpleDateFormat
-import java.util.*
 
-class ToDoAdapter(
-    private val todos: MutableList<ToDoItem>
-) : RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder>() {
+class ToDoAdapter: RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder>() {
+    private var todoList = emptyList<ToDoItem>()
 
     class ToDoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
@@ -29,14 +27,12 @@ class ToDoAdapter(
     }
 
     override fun onBindViewHolder(holder: ToDoViewHolder, position: Int) {
-        val currToDo = todos[position]
+        val currToDo = todoList[position]
         holder.itemView.apply {
             // Binding To Do data to adequate ViewHolder
             tv_todo_title.text = currToDo.title
             tv_todo_description.text = currToDo.description
-            tv_todo_date.text = SimpleDateFormat("dd/MM/yyyy").format(
-                currToDo.createdDate.time
-            )
+            tv_todo_date.text = currToDo.createdDate
             cb_todo_done.isChecked = currToDo.isDone
 
             // If is marked as done, add strike through
@@ -51,7 +47,7 @@ class ToDoAdapter(
     }
 
     override fun getItemCount(): Int {
-        return todos.size
+        return todoList.size
     }
 
     private fun toggleStrikeThrough(tvToDoTitle: TextView, isDone: Boolean) {
@@ -62,8 +58,8 @@ class ToDoAdapter(
         }
     }
 
-    fun addToDo(todo: ToDoItem) {
-        todos.add(todo)
-        notifyItemInserted(todos.size-1)
+    fun setList(todos: List<ToDoItem>) {
+        this.todoList = todos
+        notifyDataSetChanged()
     }
 }
