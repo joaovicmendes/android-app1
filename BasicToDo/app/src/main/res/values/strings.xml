@@ -14,4 +14,11 @@
     <string name="todo_empty_title">Title is required!</string>
     <string name="todo_added_success">ToDo successfully added!</string>
     <string name="todo_added_fail">Unable to add new todo</string>
+
+    <!-- Delete task -->
+    <string name="todo_delete_ask">Do you wish to Delete this ToDo?</string>
+    <string name="todo_delete_confirm">Delete</string>
+    <string name="todo_delete_cancel">Cancel</string>
+    <string name="todo_delete_success">ToDo successfully deleted</string>
+    <string name="todo_delete_title">Delete?</string>
 </resources>

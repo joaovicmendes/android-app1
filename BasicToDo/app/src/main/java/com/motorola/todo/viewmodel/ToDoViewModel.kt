@@ -20,13 +20,26 @@ class ToDoViewModel(application: Application) : AndroidViewModel(application) {
         todos = repository.readAllData
     }
 
-    fun getAllToDo(): LiveData<List<ToDoItem>> {
+    fun getAll(): LiveData<List<ToDoItem>> {
         return this.todos
     }
 
-    fun addToDo(todo: ToDoItem) {
+    fun add(todo: ToDoItem) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.addToDo(todo)
+            repository.insert(todo)
+        }
+    }
+
+    fun toggleDone(todo: ToDoItem) {
+        todo.isDone = !todo.isDone
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.update(todo)
+        }
+    }
+
+    fun delete(todo: ToDoItem) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.delete(todo)
         }
     }
 }

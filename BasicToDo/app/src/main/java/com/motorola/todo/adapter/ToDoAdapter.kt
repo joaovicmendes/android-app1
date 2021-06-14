@@ -9,10 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.motorola.todo.R
 import com.motorola.todo.model.ToDoItem
 import kotlinx.android.synthetic.main.todo_item.view.*
-import java.text.SimpleDateFormat
 
-class ToDoAdapter: RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder>() {
+class ToDoAdapter(toDoClickListener: ToDoClickListener): RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder>() {
     private var todoList = emptyList<ToDoItem>()
+    private var todoListener = toDoClickListener
 
     class ToDoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
@@ -29,7 +29,6 @@ class ToDoAdapter: RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder>() {
     override fun onBindViewHolder(holder: ToDoViewHolder, position: Int) {
         val currToDo = todoList[position]
         holder.itemView.apply {
-            // Binding To Do data to adequate ViewHolder
             tv_todo_title.text = currToDo.title
             tv_todo_description.text = currToDo.description
             tv_todo_date.text = currToDo.createdDate
@@ -38,10 +37,18 @@ class ToDoAdapter: RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder>() {
             // If is marked as done, add strike through
             toggleStrikeThrough(tv_todo_title, currToDo.isDone)
 
-            // Add event to update strike trough if done status changes
-            cb_todo_done.setOnCheckedChangeListener { _, isChecked ->
-                toggleStrikeThrough(tv_todo_title, isChecked)
-                currToDo.isDone = !currToDo.isDone
+            // Adding click listeners
+            cb_todo_done.setOnClickListener {
+                todoListener.onCheckClick(currToDo)
+            }
+
+            setOnClickListener {
+                todoListener.onClick(currToDo)
+            }
+
+            setOnLongClickListener {
+                todoListener.onLongClick(currToDo)
+                true
             }
         }
     }
@@ -61,5 +68,11 @@ class ToDoAdapter: RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder>() {
     fun setList(todos: List<ToDoItem>) {
         this.todoList = todos
         notifyDataSetChanged()
+    }
+
+    interface ToDoClickListener {
+        fun onLongClick(todo: ToDoItem)
+        fun onClick(todo: ToDoItem)
+        fun onCheckClick(todo: ToDoItem)
     }
 }

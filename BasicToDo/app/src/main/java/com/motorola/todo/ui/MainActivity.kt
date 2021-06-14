@@ -1,11 +1,12 @@
 package com.motorola.todo.ui
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.motorola.todo.R
@@ -14,7 +15,7 @@ import com.motorola.todo.model.ToDoItem
 import com.motorola.todo.viewmodel.ToDoViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ToDoAdapter.ToDoClickListener {
     private lateinit var todoAdapter: ToDoAdapter
     private lateinit var todoViewModel: ToDoViewModel
     private val addNewTodoRequestCode = 1
@@ -29,15 +30,15 @@ class MainActivity : AppCompatActivity() {
             openNewToDoActivity(view)
         }
 
-        todoAdapter = ToDoAdapter()
+        todoAdapter = ToDoAdapter(this)
+
+        todoViewModel = ViewModelProvider(this).get(ToDoViewModel::class.java)
+        todoViewModel.todos.observe(this, { todos ->
+            todoAdapter.setList(todos)
+        })
 
         rvToDoItems.adapter = todoAdapter
         rvToDoItems.layoutManager = LinearLayoutManager(this)
-
-        todoViewModel = ViewModelProvider(this).get(ToDoViewModel::class.java)
-        todoViewModel.todos.observe(this, Observer<List<ToDoItem>> { todos ->
-            todoAdapter.setList(todos)
-        })
     }
 
     private fun openNewToDoActivity(view: View) {
@@ -50,19 +51,46 @@ class MainActivity : AppCompatActivity() {
         if (requestCode == addNewTodoRequestCode && resultCode == RESULT_OK) {
             if (data != null) {
                 data.getParcelableExtra<ToDoItem>("NEW_TODO")?.let {
-                    insertToDoInDatabase(it)
+                    todoViewModel.add(it)
+
+                    Toast.makeText(
+                        this,
+                        R.string.todo_added_success,
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             }
         }
     }
 
-    private fun insertToDoInDatabase(todo: ToDoItem) {
-        todoViewModel.add(todo)
+    override fun onLongClick(todo: ToDoItem) {
+        val builder = android.app.AlertDialog.Builder(this)
+        builder.setTitle(R.string.todo_delete_title)
+            .setMessage(R.string.todo_delete_ask)
+            .setPositiveButton(R.string.todo_delete_confirm,
+                DialogInterface.OnClickListener { dialog, _ ->
+                    todoViewModel.delete(todo)
+                    dialog.dismiss()
+                    Toast.makeText(
+                        this,
+                        R.string.todo_delete_success,
+                        Toast.LENGTH_LONG
+                    ).show()
+                })
+            .setNegativeButton(R.string.todo_delete_cancel,
+                DialogInterface.OnClickListener { dialog, _ ->
+                    dialog.cancel()
+                })
 
-        Toast.makeText(
-            this,
-            R.string.todo_added_success,
-            Toast.LENGTH_LONG
-        ).show()
+        builder.create()
+        builder.show()
+    }
+
+    override fun onClick(todo: ToDoItem) {
+        todoViewModel.toggleDone(todo)
+    }
+
+    override fun onCheckClick(todo: ToDoItem) {
+        todoViewModel.toggleDone(todo)
     }
 }
