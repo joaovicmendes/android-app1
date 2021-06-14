@@ -61,9 +61,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
-        android:contentDescription="@string/fab_save_todo_description"
-        android:src="@android:drawable/ic_menu_save"
         android:backgroundTint="@color/purple_500"
+        android:contentDescription="@string/fab_save_todo_description"
+        android:src="@drawable/ic_baseline_done_24"
         app:backgroundTint="@color/purple_500"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

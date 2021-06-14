@@ -14,7 +14,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Title"
-        android:textSize="20sp"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:paddingBottom="4dp"
         app:layout_constraintBottom_toTopOf="@+id/tv_todo_description"
         app:layout_constraintEnd_toEndOf="@+id/tv_todo_description"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,6 +27,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Description"
+        android:textSize="16sp"
+        android:paddingBottom="4dp"
         app:layout_constraintEnd_toStartOf="@+id/cb_todo_done"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_todo_title" />
@@ -34,6 +38,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="CreatedDate"
+        android:textSize="12sp"
+        android:textStyle="italic"
         app:layout_constraintEnd_toStartOf="@+id/cb_todo_done"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_todo_description" />
