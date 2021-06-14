@@ -47,25 +47,18 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
         if (requestCode == addNewTodoRequestCode && resultCode == RESULT_OK) {
-
             if (data != null) {
                 data.getParcelableExtra<ToDoItem>("NEW_TODO")?.let {
                     insertToDoInDatabase(it)
                 }
             }
-        } else {
-            Toast.makeText(
-                applicationContext,
-                R.string.todo_empty_title,
-                Toast.LENGTH_LONG
-            ).show()
         }
     }
 
     private fun insertToDoInDatabase(todo: ToDoItem) {
-        todoViewModel.addToDo(todo)
+        todoViewModel.add(todo)
+
         Toast.makeText(
             this,
             R.string.todo_added_success,

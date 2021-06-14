@@ -3,6 +3,7 @@ package com.motorola.todo.ui
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.motorola.todo.R
 import com.motorola.todo.model.ToDoItem
@@ -20,19 +21,22 @@ class NewToDoActivity : AppCompatActivity() {
             val title = ed_add_todo_title.text.toString()
             val description = ed_add_todo_description.text.toString()
 
-            if (title.isEmpty()) {
-                setResult(RESULT_CANCELED, intent)
+            if (title.isNotEmpty()) {
+                val createdDate = SimpleDateFormat("dd/MM/yyyy").format(
+                    Calendar.getInstance().time
+                )
+                val todo = ToDoItem(title, description, createdDate)
+                val intent = Intent(this, MainActivity::class.java)
+                intent.putExtra("NEW_TODO", todo)
+                setResult(RESULT_OK, intent)
                 finish()
+            } else {
+                Toast.makeText(
+                    applicationContext,
+                    R.string.todo_empty_title,
+                    Toast.LENGTH_LONG
+                ).show()
             }
-
-            val createdDate = SimpleDateFormat("dd/MM/yyyy").format(
-                Calendar.getInstance().time
-            )
-            val todo = ToDoItem(title, description, createdDate)
-            val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra("NEW_TODO", todo)
-            setResult(RESULT_OK, intent)
-            finish()
         }
     }
 }
