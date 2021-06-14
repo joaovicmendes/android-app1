@@ -26,8 +26,8 @@ class MainActivity : AppCompatActivity(), ToDoAdapter.ToDoClickListener {
 
         // Binding FAB to create new To Do
         val fab: View = findViewById(R.id.fab_add_todo)
-        fab.setOnClickListener { view ->
-            openNewToDoActivity(view)
+        fab.setOnClickListener {
+            openNewToDoActivity()
         }
 
         todoAdapter = ToDoAdapter(this)
@@ -41,11 +41,13 @@ class MainActivity : AppCompatActivity(), ToDoAdapter.ToDoClickListener {
         rvToDoItems.layoutManager = LinearLayoutManager(this)
     }
 
-    private fun openNewToDoActivity(view: View) {
+    // Create intent to open add To Do activity
+    private fun openNewToDoActivity() {
         val intent = Intent(this, NewToDoActivity::class.java)
         startActivityForResult(intent, addNewTodoRequestCode)
     }
 
+    // Handle return from the add To Do activity
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == addNewTodoRequestCode && resultCode == RESULT_OK) {
@@ -63,6 +65,8 @@ class MainActivity : AppCompatActivity(), ToDoAdapter.ToDoClickListener {
         }
     }
 
+    /* Implemented functions from ToDoAdapter.ToDoClickListener interface: */
+    // Prompt menu to delete ToDoItem when LongPressing
     override fun onLongClick(todo: ToDoItem) {
         val builder = android.app.AlertDialog.Builder(this)
         builder.setTitle(R.string.todo_delete_title)
@@ -86,10 +90,12 @@ class MainActivity : AppCompatActivity(), ToDoAdapter.ToDoClickListener {
         builder.show()
     }
 
+    // Mark ToDoItem as Done
     override fun onClick(todo: ToDoItem) {
         todoViewModel.toggleDone(todo)
     }
 
+    // Mark ToDoItem as Done
     override fun onCheckClick(todo: ToDoItem) {
         todoViewModel.toggleDone(todo)
     }
