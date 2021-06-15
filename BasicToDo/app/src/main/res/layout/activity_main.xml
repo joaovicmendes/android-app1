@@ -25,10 +25,10 @@
         android:backgroundTint="@color/purple_500"
         android:contentDescription="@string/fab_add_todo_description"
         android:src="@drawable/ic_baseline_add_24"
-        app:tint="@color/white"
         app:backgroundTint="@color/purple_500"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tint="@color/white" />
 
     <TextView
         android:id="@+id/tv_todo_items_empty"
