@@ -30,25 +30,35 @@ class MainActivity : AppCompatActivity(), ToDoAdapter.ToDoClickListener {
             openNewToDoActivity()
         }
 
+        // Different application Views
         val todoList: View = findViewById(R.id.rv_todo_items)
-        val emptyListText: View = findViewById(R.id.tv_todo_items_empty)
+        val emptyList: View = findViewById(R.id.tv_todo_items_empty)
+        val progressBar: View = findViewById(R.id.pb_todo_items)
+
+        // Initial View configuration
+        todoList.visibility    = View.INVISIBLE
+        emptyList.visibility   = View.INVISIBLE
+        progressBar.visibility = View.VISIBLE
 
         todoAdapter = ToDoAdapter(this)
-
-        todoViewModel = ViewModelProvider(this).get(ToDoViewModel::class.java)
-        todoViewModel.todos.observe(this, { todos ->
-            todoAdapter.setList(todos)
-            if (todoAdapter.itemCount == 0) {
-                todoList.visibility = View.INVISIBLE
-                emptyListText.visibility = View.VISIBLE
-            } else {
-                todoList.visibility = View.VISIBLE
-                emptyListText.visibility = View.INVISIBLE
-            }
-        })
-
         rv_todo_items.adapter = todoAdapter
         rv_todo_items.layoutManager = LinearLayoutManager(this)
+
+        // Callback to update RecycleView items
+        todoViewModel = ViewModelProvider(this).get(ToDoViewModel::class.java)
+        todoViewModel.todos.observe(this, { todos ->
+            progressBar.visibility = View.VISIBLE
+            todoAdapter.setList(todos)
+            progressBar.visibility = View.INVISIBLE
+
+            if (todoAdapter.itemCount == 0) {
+                todoList.visibility = View.INVISIBLE
+                emptyList.visibility = View.VISIBLE
+            } else {
+                todoList.visibility = View.VISIBLE
+                emptyList.visibility = View.INVISIBLE
+            }
+        })
     }
 
     // Create intent to open add To Do activity
@@ -63,8 +73,10 @@ class MainActivity : AppCompatActivity(), ToDoAdapter.ToDoClickListener {
         if (requestCode == addNewTodoRequestCode && resultCode == RESULT_OK) {
             if (data != null) {
                 data.getParcelableExtra<ToDoItem>("NEW_TODO")?.let {
+                    // Add new ToDoItem to ViewModel
                     todoViewModel.add(it)
 
+                    // Show success message
                     Toast.makeText(
                         this,
                         R.string.todo_added_success,
