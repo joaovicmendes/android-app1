@@ -9,51 +9,52 @@
 
     <TextView
         android:id="@+id/tv_add_todo_title"
-        android:layout_width="300dp"
+        android:layout_width="333dp"
         android:layout_height="wrap_content"
-        android:paddingTop="80dp"
+        android:paddingTop="20dp"
         android:paddingBottom="8dp"
         android:text="@string/tv_todo_title"
         android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/ed_add_todo_title"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/ed_add_todo_title"
-        android:layout_width="300dp"
+        android:layout_width="333dp"
         android:layout_height="wrap_content"
         android:hint="@string/ed_todo_title_hint"
         android:importantForAutofill="no"
         android:inputType="textAutoComplete|textAutoCorrect|textCapSentences"
         android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_add_todo_description"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_add_todo_title" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/tv_add_todo_description"
-        android:layout_width="300dp"
+        android:layout_width="333dp"
         android:layout_height="wrap_content"
         android:paddingTop="24dp"
         android:paddingBottom="8dp"
         android:text="@string/tv_todo_description"
         android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/ed_add_todo_description"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ed_add_todo_title" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/ed_add_todo_description"
-        android:layout_width="300dp"
+        android:layout_width="333dp"
         android:layout_height="wrap_content"
         android:hint="@string/ed_todo_description_hint"
         android:importantForAutofill="no"
         android:inputType="textAutoComplete|textAutoCorrect|textCapSentences|textMultiLine"
         android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_add_todo_description" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_save_todo"
@@ -67,6 +68,6 @@
         app:backgroundTint="@color/purple_500"
         app:tint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
