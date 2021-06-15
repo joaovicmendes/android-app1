@@ -2,6 +2,7 @@
     <!-- Main Activity -->
     <string name="app_name">Basic ToDo</string>
     <string name="fab_add_todo_description">Add ToDo</string>
+    <string name="todo_items_list_empty">No ToDo items! You can create more on the + button</string>
 
     <!-- New To Do Activity -->
     <string name="tv_todo_title">Title</string>

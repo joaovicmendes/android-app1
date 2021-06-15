@@ -30,15 +30,25 @@ class MainActivity : AppCompatActivity(), ToDoAdapter.ToDoClickListener {
             openNewToDoActivity()
         }
 
+        val todoList: View = findViewById(R.id.rv_todo_items)
+        val emptyListText: View = findViewById(R.id.tv_todo_items_empty)
+
         todoAdapter = ToDoAdapter(this)
 
         todoViewModel = ViewModelProvider(this).get(ToDoViewModel::class.java)
         todoViewModel.todos.observe(this, { todos ->
             todoAdapter.setList(todos)
+            if (todoAdapter.itemCount == 0) {
+                todoList.visibility = View.INVISIBLE
+                emptyListText.visibility = View.VISIBLE
+            } else {
+                todoList.visibility = View.VISIBLE
+                emptyListText.visibility = View.INVISIBLE
+            }
         })
 
-        rvToDoItems.adapter = todoAdapter
-        rvToDoItems.layoutManager = LinearLayoutManager(this)
+        rv_todo_items.adapter = todoAdapter
+        rv_todo_items.layoutManager = LinearLayoutManager(this)
     }
 
     // Create intent to open add To Do activity
@@ -68,7 +78,7 @@ class MainActivity : AppCompatActivity(), ToDoAdapter.ToDoClickListener {
     /* Implemented functions from ToDoAdapter.ToDoClickListener interface: */
     // Prompt menu to delete ToDoItem when LongPressing
     override fun onLongClick(todo: ToDoItem) {
-        val builder = android.app.AlertDialog.Builder(this)
+        val builder = AlertDialog.Builder(this)
         builder.setTitle(R.string.todo_delete_title)
             .setMessage(R.string.todo_delete_ask)
             .setPositiveButton(R.string.todo_delete_confirm,
